@@ -69,17 +69,23 @@ df = pd.read_csv(file_path).replace('', np.nan).astype(float)
 target = 'Potability'
 predictors = df.columns[df.columns != target]
 
-# Univariate analysis
+# 2. histograms for each predictor
 df[predictors].hist(figsize=(15, 10), bins=30)
 plt.suptitle('Univariate Analysis: Histograms of Predictors', y=1.02)
 plt.show()
 
-# Summary
+# 3. Summary
 summary_stats = df.describe()
 print(summary_stats)
 
-# Scatter plot matrix
+# 4. Scatter plot matrix
 sns.pairplot(df, diag_kind='kde', hue=target)
 plt.suptitle('Multivariate Analysis: Pairplot', y=1.02)
 plt.show()
 
+# 5. heatmap with pairwise
+corr_matrix = df.corr()
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Heatmap of Pairwise Correlations')
+plt.show()
